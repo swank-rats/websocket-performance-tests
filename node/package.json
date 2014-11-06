@@ -1,0 +1,19 @@
+{
+    "name": "ws-performance-test",
+    "version": "0.0.0",
+    "description": "Websocket Performance Testsuite",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Johannes Wachter <wachter.johannes@hotmail.com> (https://github.com/wachterjohannes)",
+    "license": "MIT",
+    "devDependencies": {
+        "grunt": "^0.4.5",
+        "grunt-mocha-cli": "^1.10.0",
+        "grunt-contrib-watch": "^0.6.1",
+        "mocha": "^2.0.1",
+        "chai": "^1.9.2",
+        "sinon": "^1.10.3",
+        "sinon-chai": "^2.6.0"
+    }
+}
