@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Test-Case: One-Way</h1>
+
+        <script type="text/javascript">
+            var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
+
+            connection.onstart = function (e) {
+                console.warn('start');
+            };
+
+            connection.onmessage = function (e) {
+                console.warn(e.data);
+                connection.send(e.data);
+            };
+        </script>
+    </body>
+</html>
