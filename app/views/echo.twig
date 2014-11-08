@@ -12,10 +12,10 @@
 
     <script type="text/javascript">
         var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
-        connection.onstart = function (e) {
+        connection.onstart = function(e) {
             console.warn('start');
         };
-        connection.onmessage = function (e) {
+        connection.onmessage = function(e) {
             var statistic = JSON.parse(e.data);
             if (!!statistic.finished) {
                 var $table = $($('#statistic-template').html());
@@ -55,32 +55,34 @@
     </script>
 
     <script id="statistic-template" type="text/template">
-        <h2 class="name">...</h2>
-        <table class="table table-hover">
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-            </tr>
-            <tr>
-                <td>Count:</td>
-                <td><span class="count">...</span></td>
-            </tr>
-            <tr>
-                <td>Min:</td>
-                <td><span class="min">...</span> ns</td>
-            </tr>
-            <tr>
-                <td>Max:</td>
-                <td><span class="max">...</span> ns</td>
-            </tr>
-            <tr>
-                <td>Sum:</td>
-                <td><span class="sum">...</span> ns</td>
-            </tr>
-            <tr>
-                <td>Average:</td>
-                <td><span class="avg">...</span> ns</td>
-            </tr>
-        </table>
+        <div class="statistic-item">
+            <h2 class="name">...</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Count:</td>
+                    <td><span class="count">...</span></td>
+                </tr>
+                <tr>
+                    <td>Min:</td>
+                    <td><span class="min">...</span> ns</td>
+                </tr>
+                <tr>
+                    <td>Max:</td>
+                    <td><span class="max">...</span> ns</td>
+                </tr>
+                <tr>
+                    <td>Sum:</td>
+                    <td><span class="sum">...</span> ns</td>
+                </tr>
+                <tr>
+                    <td>Average:</td>
+                    <td><span class="avg">...</span> ns</td>
+                </tr>
+            </table>
+        </div>
     </script>
 {% endblock %}

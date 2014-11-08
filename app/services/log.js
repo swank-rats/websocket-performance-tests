@@ -3,7 +3,7 @@ var scribe = require('scribe');
 // Configuration
 scribe.configure(function(){
     scribe.set('app', 'Swank-Rats');
-    scribe.set('logPath', './logs');
+    scribe.set('logPath', '../logs');
     scribe.set('defaultTag', 'DEFAULT_TAG');
     scribe.set('divider', ':::');
     scribe.set('identation', 5);
