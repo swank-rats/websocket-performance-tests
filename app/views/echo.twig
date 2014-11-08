@@ -8,7 +8,55 @@
             <div id="loader_1" class="loader"></div>
         </div>
 
-        <table class="table table-hover" id="statistic" style="display: none;">
+    </div>
+
+    <script type="text/javascript">
+        var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
+        connection.onstart = function (e) {
+            console.warn('start');
+        };
+        connection.onmessage = function (e) {
+            var statistic = JSON.parse(e.data);
+            if (!!statistic.finished) {
+                var $table = $($('#statistic-template').html());
+
+                $table.find('.name').text(statistic.name);
+                $table.find('.count').text(formatNumber(statistic.count, 0));
+                $table.find('.min').text(formatNumber(statistic.min));
+                $table.find('.max').text(formatNumber(statistic.max));
+                $table.find('.sum').text(formatNumber(statistic.sum));
+                $table.find('.avg').text(formatNumber(statistic.avg));
+
+                $('#result').append($table);
+
+                if (!!statistic.last) {
+                    $('#loader').hide();
+                }
+            } else {
+                connection.send(e.data);
+            }
+        };
+
+        function formatNumber(number, fixed) {
+            if (fixed === undefined) {
+                fixed = 2;
+            }
+
+            var number = number.toFixed(fixed) + '';
+            var x = number.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+    </script>
+
+    <script id="statistic-template" type="text/template">
+        <h2 class="name">...</h2>
+        <table class="table table-hover">
             <tr>
                 <th>Name</th>
                 <th>Value</th>
@@ -34,43 +82,5 @@
                 <td><span class="avg">...</span> ns</td>
             </tr>
         </table>
-    </div>
-
-    <script type="text/javascript">
-        var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
-        connection.onstart = function (e) {
-            console.warn('start');
-        };
-        connection.onmessage = function (e) {
-            var statistic = JSON.parse(e.data);
-            if (!!statistic.finished) {
-                $('.count').text(formatNumber(statistic.count, 0));
-                $('.min').text(formatNumber(statistic.min));
-                $('.max').text(formatNumber(statistic.max));
-                $('.sum').text(formatNumber(statistic.sum));
-                $('.avg').text(formatNumber(statistic.avg));
-
-                $('#loader').hide();
-                $('#statistic').show();
-            } else {
-                connection.send(e.data);
-            }
-        };
-
-        function formatNumber(number, fixed) {
-            if (fixed === undefined) {
-                fixed = 2;
-            }
-
-            var number = number.toFixed(fixed) + '';
-            var x = number.split('.');
-            var x1 = x[0];
-            var x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + ',' + '$2');
-            }
-            return x1 + x2;
-        }
     </script>
 {% endblock %}

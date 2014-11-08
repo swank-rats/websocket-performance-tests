@@ -15,6 +15,8 @@ module.exports.init = function(config) {
                 console.t('ECHO').statistic(JSON.stringify(stat));
 
                 stat.finished = true;
+                stat.last = true;
+                stat.name = 'echo';
                 ws.send(JSON.stringify(stat));
             } else {
                 i++;
