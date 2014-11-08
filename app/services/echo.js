@@ -10,9 +10,12 @@ module.exports.init = function(config) {
         ws.on('message', function() {
             results.push(utils.getTime() - time);
 
-            if (i >= 99) {
+            if (i >= 9999) {
                 var stat = utils.getStatistics(results);
                 console.t('ECHO').statistic(JSON.stringify(stat));
+
+                stat.finished = true;
+                ws.send(JSON.stringify(stat));
             } else {
                 i++;
                 time = utils.getTime();
@@ -21,6 +24,6 @@ module.exports.init = function(config) {
         });
 
         time = utils.getTime();
-        ws.send(i + '');
+        ws.send(JSON.stringify({count: i, finished: false}));
     });
 };
