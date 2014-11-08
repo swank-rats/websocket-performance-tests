@@ -3,11 +3,14 @@ var express = require('express'),
     path = require('path'),
     favicon = require('serve-favicon'),
     cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    events = require('events'),
+    http = require('http');
 
 //services
 var log = require('./services/log'),
-    echo = require('./services/echo');
+    echo = require('./services/echo'),
+    ws = require('./services/ws');
 
 // server
 var app = express();
@@ -69,6 +72,10 @@ app.use(log.express.logger(function(req, res) {
     return true;
 }));
 
-echo.init({port: 3001});
+app.events = new events.EventEmitter();
+app.server = http.createServer(app);
+
+ws(app);
+echo(app);
 
 module.exports = app;

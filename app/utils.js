@@ -18,6 +18,8 @@ exports.getStatistics = function(values) {
 
     return {
         count: count,
+        firstValue: values[0],
+        lastValue: values.slice(-1)[0],
         min: min,
         max: max,
         sum: sum,

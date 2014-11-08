@@ -12,16 +12,26 @@
 
     <script type="text/javascript">
         var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
-        connection.onstart = function(e) {
-            console.warn('start');
+        connection.onopen = function(e) {
+            console.debug('start');
+
+            connection.send(JSON.stringify({cmd: 'echo'}))
         };
         connection.onmessage = function(e) {
-            var statistic = JSON.parse(e.data);
+            var statistic = {};
+
+            try {
+                statistic = JSON.parse(e.data);
+            } catch (e) {
+            }
+
             if (!!statistic.finished) {
                 var $table = $($('#statistic-template').html());
 
                 $table.find('.name').text(statistic.name);
                 $table.find('.count').text(formatNumber(statistic.count, 0));
+                $table.find('.first').text(formatNumber(statistic.firstValue));
+                $table.find('.last').text(formatNumber(statistic.lastValue));
                 $table.find('.min').text(formatNumber(statistic.min));
                 $table.find('.max').text(formatNumber(statistic.max));
                 $table.find('.sum').text(formatNumber(statistic.sum));
@@ -56,7 +66,7 @@
 
     <script id="statistic-template" type="text/template">
         <div class="statistic-item">
-            <h2 class="name">...</h2>
+            <h2 class="name"></h2>
             <table class="table table-hover">
                 <tr>
                     <th>Name</th>
@@ -64,23 +74,31 @@
                 </tr>
                 <tr>
                     <td>Count:</td>
-                    <td><span class="count">...</span></td>
+                    <td><span class="count"></span></td>
+                </tr>
+                <tr>
+                    <td>First:</td>
+                    <td><span class="first"></span> ns</td>
+                </tr>
+                <tr>
+                    <td>Last:</td>
+                    <td><span class="last"></span> ns</td>
                 </tr>
                 <tr>
                     <td>Min:</td>
-                    <td><span class="min">...</span> ns</td>
+                    <td><span class="min"></span> ns</td>
                 </tr>
                 <tr>
                     <td>Max:</td>
-                    <td><span class="max">...</span> ns</td>
+                    <td><span class="max"></span> ns</td>
                 </tr>
                 <tr>
                     <td>Sum:</td>
-                    <td><span class="sum">...</span> ns</td>
+                    <td><span class="sum"></span> ns</td>
                 </tr>
                 <tr>
                     <td>Average:</td>
-                    <td><span class="avg">...</span> ns</td>
+                    <td><span class="avg"></span> ns</td>
                 </tr>
             </table>
         </div>

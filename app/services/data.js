@@ -1,11 +1,12 @@
 var WebSocketServer = require('ws').Server, wss,
-    utils = require('../utils');
+    utils = require('../utils'),
+    phony = require('phony').make_phony();
 
 module.exports.init = function(config) {
     wss = new WebSocketServer(config);
 
     wss.on('connection', function(ws) {
-        var i = 0, time, results = [];
+        var i = 0, time, results = [], size = 1024, data = phony.letters(size), x = 0;
 
         ws.on('message', function() {
             results.push(utils.getTime() - time);
@@ -16,16 +17,19 @@ module.exports.init = function(config) {
 
                 stat.finished = true;
                 stat.last = true;
-                stat.name = 'echo';
                 ws.send(JSON.stringify(stat));
-            } else {
+
+                x++;
+                data = phony.letters(size*Math.pow(10, x));
+            }
+            if (x < 10) {
                 i++;
                 time = utils.getTime();
-                ws.send(i + '');
+                ws.send({count: i, finished: false, name: 'data 1kb'});
             }
         });
 
         time = utils.getTime();
-        ws.send(JSON.stringify({count: i, finished: false}));
+        ws.send(JSON.stringify({count: i, finished: false, name: 'data 1kb'}));
     });
 };
