@@ -3,11 +3,12 @@
 {% block content %}
     <h1>{{ title }}</h1>
 
-    <div id="result" class="mtop20 mbottom20">
+    <div class="mtop20 mbottom20">
         <div id="loader" class="center-block">
             <div id="loader_1" class="loader"></div>
         </div>
 
+        <div id="result"></div>
     </div>
 
     <script type="text/javascript">
@@ -30,6 +31,7 @@
 
                 $table.find('.name').text(statistic.name);
                 $table.find('.count').text(formatNumber(statistic.count, 0));
+                $table.find('.length').text(formatNumber(statistic.dataLength, 0));
                 $table.find('.first').text(formatNumber(statistic.firstValue));
                 $table.find('.last').text(formatNumber(statistic.lastValue));
                 $table.find('.min').text(formatNumber(statistic.min));
@@ -37,7 +39,7 @@
                 $table.find('.sum').text(formatNumber(statistic.sum));
                 $table.find('.avg').text(formatNumber(statistic.avg));
 
-                $('#result').append($table);
+                $('#result').prepend($table);
 
                 if (!!statistic.last) {
                     $('#loader').hide();
@@ -71,6 +73,10 @@
                 <tr>
                     <th>Name</th>
                     <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Data Length:</td>
+                    <td><span class="length"></span></td>
                 </tr>
                 <tr>
                     <td>Count:</td>

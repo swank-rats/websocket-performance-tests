@@ -6,8 +6,6 @@ module.exports = function(app) {
     wss = new WebSocketServer({server: app.server});
 
     wss.on('connection', function(socket) {
-        socket.events = new events.EventEmitter();
-
         socket.on('message', function(message) {
             var data = {};
 
@@ -17,10 +15,10 @@ module.exports = function(app) {
             }
 
             if (!!data.cmd) {
-                app.events.emit('message.' + data.cmd, socket, data);
+                app.emit('command.' + data.cmd, socket, data);
             }
 
-            socket.events.emit('message', socket, data);
+            socket.emit('data', socket, data);
         });
     });
 };

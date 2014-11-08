@@ -4,7 +4,6 @@ var express = require('express'),
     favicon = require('serve-favicon'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    events = require('events'),
     http = require('http');
 
 //services
@@ -72,7 +71,6 @@ app.use(log.express.logger(function(req, res) {
     return true;
 }));
 
-app.events = new events.EventEmitter();
 app.server = http.createServer(app);
 
 ws(app);
