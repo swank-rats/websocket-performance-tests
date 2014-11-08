@@ -1,0 +1,16 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    <h1>TEST</h1>
+
+    <script type="text/javascript">
+        var connection = new WebSocket('ws://{{ ip }}:{{ port }}');
+        connection.onstart = function (e) {
+            console.warn('start');
+        };
+        connection.onmessage = function (e) {
+            console.warn(e.data);
+            connection.send(e.data);
+        };
+    </script>
+{% endblock %}

@@ -1,3 +1,6 @@
+var os = require('os'),
+    interfaces = os.networkInterfaces();
+
 exports.getTime = function() {
     var hrTime = process.hrtime();
 
@@ -19,5 +22,18 @@ exports.getStatistics = function(values) {
         max: max,
         sum: sum,
         avg: avg
+    }
+};
+
+exports.getInterface = function() {
+    for (key in interfaces) {
+        if (interfaces.hasOwnProperty(key) && key !== 'lo0') {
+            var item = interfaces[key];
+            for (innerKey in item) {
+                if (item.hasOwnProperty(innerKey) && item[innerKey].family === 'IPv4' && item[innerKey].internal === false) {
+                    return item[innerKey];
+                }
+            }
+        }
     }
 };

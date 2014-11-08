@@ -14,6 +14,7 @@ var app = express();
 
 // routes
 var indexRoutes = require('./routes/index'),
+    wsRoutes = require('./routes/ws'),
     logRoutes = require('./routes/log');
 
 // view engine setup
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
 app.use('/', indexRoutes);
 app.use('/log', logRoutes);
+app.use('/ws', wsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

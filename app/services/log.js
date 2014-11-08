@@ -15,10 +15,8 @@ scribe.configure(function(){
 
 // Create Loggers
 scribe.addLogger('log', true, true, 'green');
-scribe.addLogger('realtime', true, true, 'underline');
-scribe.addLogger('high', true, true, 'magenta');
-scribe.addLogger('normal', true, true, 'white');
-scribe.addLogger('low', true, true, 'grey');
+scribe.addLogger('statistic', true, true, 'white');
 scribe.addLogger('info', true, true, 'cyan');
+scribe.addLogger('error', true, true, 'red');
 
 module.exports = scribe;

@@ -10,9 +10,9 @@ module.exports.init = function(config) {
         ws.on('message', function() {
             results.push(utils.getTime() - time);
 
-            if (i >= 100) {
+            if (i >= 99) {
                 var stat = utils.getStatistics(results);
-                console.log('Result: ' + JSON.stringify(stat));
+                console.t('ECHO').statistic(JSON.stringify(stat));
             } else {
                 i++;
                 time = utils.getTime();
