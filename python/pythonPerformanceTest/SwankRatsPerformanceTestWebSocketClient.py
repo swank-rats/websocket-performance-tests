@@ -1,6 +1,6 @@
 __author__ = 'Johannes'
 from ws4py.client.threadedclient import WebSocketClient
-
+import socket
 
 class SwankRatsPerformanceTestWebSocketClient(WebSocketClient):
 
@@ -10,7 +10,8 @@ class SwankRatsPerformanceTestWebSocketClient(WebSocketClient):
 
     def opened(self):
         print("opened")
-        self.send('{"cmd": "echo"}')
+        print(socket.gethostname())
+        self.send('{"cmd": "echo", "name": "'+socket.gethostname()+'"}')
     def closed(self, code, reason=None):
         self.isOpen = False
         print "Closed down", code, reason
