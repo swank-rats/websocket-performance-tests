@@ -38,13 +38,17 @@ var utils = require('../utils'),
     };
 
 module.exports = function(app) {
-    app.on('command.echo', function(socket) {
-        echoCommand(socket, '', false, 'No Data', 'ECHO', 10000).then(function() {
-            echoCommand(socket, phony.letters(1024), false, '1 kb', 'ECHO', 1000).then(function() {
-                echoCommand(socket, phony.letters(1024 * 10), false, '10 kb', 'ECHO', 1000).then(function() {
-                    echoCommand(socket, phony.letters(1024 * 100), false, '100 kb', 'ECHO', 1000).then(function() {
-                        echoCommand(socket, phony.letters(1024 * 1000), true, '1000 kb', 'ECHO', 1000).then(function() {
-                            console.t('ECHO').log('end');
+    app.on('command.echo', function(socket, data) {
+        var tag = 'ECHO (' + data.name + ')';
+
+        console.t(tag).log('started');
+
+        echoCommand(socket, ' ', false, 'No Data', tag, 10000).then(function() {
+            echoCommand(socket, phony.letters(1024), false, '1 kb', tag, 1000).then(function() {
+                echoCommand(socket, phony.letters(1024 * 10), false, '10 kb', tag, 1000).then(function() {
+                    echoCommand(socket, phony.letters(1024 * 100), false, '100 kb', tag, 1000).then(function() {
+                        echoCommand(socket, phony.letters(1024 * 1000), true, '1000 kb', tag, 1000).then(function() {
+                            console.t(tag).log('end');
                         });
                     });
                 });

@@ -16,7 +16,7 @@
         connection.onopen = function(e) {
             console.debug('start');
 
-            connection.send(JSON.stringify({cmd: 'echo'}))
+            connection.send(JSON.stringify({cmd: 'echo', name: 'browser'}))
         };
         connection.onmessage = function(e) {
             var statistic = {};
@@ -54,14 +54,16 @@
                 fixed = 2;
             }
 
-            var number = number.toFixed(fixed) + '';
-            var x = number.split('.');
-            var x1 = x[0];
-            var x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
+            number = number.toFixed(fixed) + '';
+            var x = number.split('.'),
+                    x1 = x[0],
+                    x2 = x.length > 1 ? '.' + x[1] : '',
+                    rgx = /(\d+)(\d{3})/;
+
             while (rgx.test(x1)) {
                 x1 = x1.replace(rgx, '$1' + ',' + '$2');
             }
+
             return x1 + x2;
         }
     </script>
@@ -84,27 +86,27 @@
                 </tr>
                 <tr>
                     <td>First:</td>
-                    <td><span class="first"></span> ns</td>
+                    <td><span class="first"></span> us</td>
                 </tr>
                 <tr>
                     <td>Last:</td>
-                    <td><span class="last"></span> ns</td>
+                    <td><span class="last"></span> us</td>
                 </tr>
                 <tr>
                     <td>Min:</td>
-                    <td><span class="min"></span> ns</td>
+                    <td><span class="min"></span> us</td>
                 </tr>
                 <tr>
                     <td>Max:</td>
-                    <td><span class="max"></span> ns</td>
+                    <td><span class="max"></span> us</td>
                 </tr>
                 <tr>
                     <td>Sum:</td>
-                    <td><span class="sum"></span> ns</td>
+                    <td><span class="sum"></span> us</td>
                 </tr>
                 <tr>
                     <td>Average:</td>
-                    <td><span class="avg"></span> ns</td>
+                    <td><span class="avg"></span> us</td>
                 </tr>
             </table>
         </div>
